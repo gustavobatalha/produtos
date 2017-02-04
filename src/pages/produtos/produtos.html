@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Lista de Produtos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+
+    <button ion-item *ngFor="let produto of produtos" (click)="produtoTapped($event, produto)" (swipe)="removerProduto(produto)">
+  
+      <span  [ngStyle]="{'font-weight': produto.checked ? 'bold' : 'normal' }"  >{{ produto.nome }} (Cod. {{ produto.codigo }})</span>
+      
+      <ion-icon name="trash"  color="danger" item-right  ></ion-icon>      
+    </button>
+    <!--
+      (click)="removerProduto(produto)"
+    -->
+
+
+    <!--<button ion-item *ngFor="let produto of produtos" (click)="produtoT($event, produto)">
+      <ion-icon [name]="produto.icon" item-left></ion-icon>
+      {{produto.title}}
+      <div class="item-note" item-right>
+        {{produto.note}}
+      </div>
+    </button>-->
+  </ion-list>
+  <ion-fab rigth bottom>
+    <button (click)="addProduto()" ion-fab>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+  
+</ion-content>
