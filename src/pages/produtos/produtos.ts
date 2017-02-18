@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProdutosService, Produto } from '../../services/produtos.service'
 import { AlertController} from 'ionic-angular'
+import {Observable} from 'rxjs/Observable'
+import { ProdutoPage } from '../produto/produto'
 
 @Component({
   selector: 'page-produtos',
@@ -10,10 +12,15 @@ import { AlertController} from 'ionic-angular'
 })
 export class ProdutosPage {
 
-  produtos:Produto[];
+  produtos:Observable<Produto[]>;
 
-  constructor(private produtosService: ProdutosService, public alertCtrl: AlertController) {
-    this.produtos = produtosService.getProdutos();
+  constructor(private produtosService: ProdutosService, 
+              public alertCtrl: AlertController,
+              public navCtrl: NavController) {
+  }
+
+  ionViewWillEnter(){
+    this.produtos = this.produtosService.get();
   }
 
   addProduto(){
@@ -28,8 +35,8 @@ export class ProdutosPage {
         {
           text:"Salvar",
           handler: data => {
-            this.produtosService.addProduto({nome: data.nome, codigo: data.codigo, checked:false})          
-            this.produtos = this.produtosService.getProdutos();
+            this.produtosService.add({nome: data.nome, codigo: data.codigo, checked:false})          
+            this.produtos = this.produtosService.get()
           }
         }
       ]
@@ -41,8 +48,15 @@ export class ProdutosPage {
     produto.checked = !produto.checked;
   }
 
-  removerProduto(produto){
-    this.produtosService.removerProduto(produto);
+  removerProduto(ev, produto){
+    this.produtosService.remove(produto.id)
+      .subscribe(()=> this.produtos = this.produtosService.get());
+    ev.stopPropagation();      
+  }
+
+  visualiar(ev, produto: Produto){
+    this.navCtrl.push(ProdutoPage, {produto: produto});
+    ev.stopPropagation();          
   }
 
 

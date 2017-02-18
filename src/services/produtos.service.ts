@@ -1,34 +1,39 @@
 import { Injectable } from '@angular/core'
+import {RESTClient, BaseUrl, DefaultHeaders, Produces, GET, DELETE, POST, PUT, Path, Body, } from 'ng2-http'
+import {Http} from '@angular/http'
+import {Observable} from 'rxjs/Observable';
+
 
 @Injectable()
-export class ProdutosService{
-    private produtos: Produto[] = [
-        {nome:"Produto 1", codigo: 11111, checked:false},
-        {nome:"Produto 2", codigo: 22222, checked:false},
-        {nome:"Produto 3", codigo: 33333, checked:false},
-        {nome:"Produto 4", codigo: 44444, checked:false},
-        {nome:"Produto 5", codigo: 55555, checked:false}
-    ];
+@DefaultHeaders({
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+})
+@BaseUrl('http://192.168.207.89:3000/produtos')
+export class ProdutosService  extends RESTClient{
+    constructor(http:Http){ super(http)}
 
-    getProdutos(){
-        return this.produtos;
-    }
-    addProduto(produto: Produto){
-        this.produtos.push(produto);
-    }
+    @GET('/')
+    @Produces<Produto[]>()
+    get(): Observable<Produto[]> {return null;}
 
-    removerProduto(produto: Produto){
-        let i = this.produtos.indexOf(produto);
-        if(i > -1){
-            this.produtos.splice(i,1);
-        }
-    }
+    @DELETE('/{id}')
+    remove( @Path('id') id: number ):Observable<any> {return null;}
+
+    @POST('/')
+    @Produces<Produto>()
+    add( @Body Produto: Produto ):Observable<Produto>{return null}
+
+    @PUT('/{id}')
+    @Produces<Produto>()
+    update( @Path('id') id: number, @Body Produto: Produto):Observable<Produto>{ return null }
 }
 
 
 
 
 export interface Produto{
+    id?: number
     nome: string
     codigo: number
     checked: boolean

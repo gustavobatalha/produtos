@@ -3,11 +3,13 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { ProdutosPage } from '../pages/produtos/produtos';
+import { ProdutoPage } from '../pages/produto/produto';
 
 @NgModule({
   declarations: [
     MyApp,
-    ProdutosPage
+    ProdutosPage,
+    ProdutoPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -15,7 +17,8 @@ import { ProdutosPage } from '../pages/produtos/produtos';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ProdutosPage
+    ProdutosPage,
+    ProdutoPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

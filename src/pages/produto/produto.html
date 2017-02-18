@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Detalhe do Produto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-card>    
+      <ion-card-content>
+          <ion-card-title [ngStyle]="{'text-decoration': produto.checked ? 'line-through' : 'none' }">
+            {{ produto.nome }} (Cod. {{produto.codigo}})
+          </ion-card-title>
+          <ion-row no-padding>
+              <ion-col>
+                  <button ion-button clear small (click)="marcar()" icon-left>
+                      <ion-icon name="start"></ion-icon> {{produto.checked?'Des':''}}marca
+                  </button>
+              </ion-col>
+              <ion-col text-right>
+                  <button ion-button clear small (click)="excluir()" icon-left color="danger">
+                      <ion-icon name="trash"></ion-icon> Excluir
+                  </button>
+              </ion-col>
+          </ion-row>
+      </ion-card-content>
+  </ion-card>    
+
+
+</ion-content>
