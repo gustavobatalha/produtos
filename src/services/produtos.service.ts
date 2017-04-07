@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
     'Accept': 'application/json',
     'Content-Type': 'application/json'
 })
-@BaseUrl('http://192.168.207.89:3000/produtos')
+@BaseUrl('http://localhost:3000/produtos')
 export class ProdutosService  extends RESTClient{
     constructor(http:Http){ super(http)}
 
