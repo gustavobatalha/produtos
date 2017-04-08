@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import {RESTClient, BaseUrl, DefaultHeaders, Produces, GET, DELETE, POST, PUT, Path, Body, } from 'ng2-http'
+import {RESTClient, BaseUrl, DefaultHeaders, Produces, GET, DELETE, POST, PUT, Path, Body, Query } from 'ng2-http'
 import {Http} from '@angular/http'
 import {Observable} from 'rxjs/Observable';
 
@@ -9,13 +9,13 @@ import {Observable} from 'rxjs/Observable';
     'Accept': 'application/json',
     'Content-Type': 'application/json'
 })
-@BaseUrl('http://192.168.25.22:3000/produtos')
+@BaseUrl('http://192.168.207.89:3000/produtos')
 export class ProdutosService  extends RESTClient{
     constructor(http:Http){ super(http)}
 
     @GET('/')
     @Produces<Produto[]>()
-    get(): Observable<Produto[]> {return null;}
+    get(@Query('codigo') codigo?: string): Observable<Produto[]> {return null;}
 
     @DELETE('/{id}')
     remove( @Path('id') id: number ):Observable<any> {return null;}

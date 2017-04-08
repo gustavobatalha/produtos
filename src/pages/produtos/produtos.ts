@@ -47,10 +47,20 @@ export class ProdutosPage {
     prompt.present();
   }
 
-  buscarProduto(){
-
+  buscarProduto(produtos){
+    
     this.barcodeScanner.scan().then((barcodeData) => {
-      this.filtrar = barcodeData.text
+
+      this.produtosService.get(barcodeData.text).subscribe(produto => {
+
+        if(produto.length == 1){
+          this.navCtrl.push(ProdutoPage, {produto: produto[0]});
+        }else{
+          this.filtrar = barcodeData.text;
+        }
+        
+      }) ;
+
     }, (err) => {
         // An error occurred
     });
@@ -82,7 +92,7 @@ export class ProdutosPage {
 
   visualiar(ev, produto: Produto){
     this.navCtrl.push(ProdutoPage, {produto: produto});
-    ev.stopPropagation();          
+    ev.stopPropagation();
   }
 
 
