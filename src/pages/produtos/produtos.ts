@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { ProdutosService, Produto } from '../../services/produtos.service'
 import { AlertController} from 'ionic-angular'
 import {Observable} from 'rxjs/Observable'
 import { ProdutoPage } from '../produto/produto'
+import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
 @Component({
   selector: 'page-produtos',
@@ -13,10 +14,12 @@ import { ProdutoPage } from '../produto/produto'
 export class ProdutosPage {
 
   produtos:Observable<Produto[]>;
+  filtrar:String;
 
   constructor(private produtosService: ProdutosService, 
               public alertCtrl: AlertController,
-              public navCtrl: NavController) {
+              public navCtrl: NavController,
+              public barcodeScanner: BarcodeScanner) {
   }
 
   ionViewWillEnter(){
@@ -43,6 +46,29 @@ export class ProdutosPage {
     });
     prompt.present();
   }
+
+  buscarProduto(){
+
+    this.barcodeScanner.scan().then((barcodeData) => {
+      this.filtrar = barcodeData.text
+    }, (err) => {
+        // An error occurred
+    });
+  }
+
+  checkFiltro(item){
+
+    if(typeof this.filtrar == 'undefined'){
+      return true;
+    }else if(item.codigo == this.filtrar){
+      return true;
+    }else{
+      return false;
+    }
+    
+    
+  }
+  
 
   produtoTapped(event, produto) {
     produto.checked = !produto.checked;

@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner'
 
 import { ProdutosPage } from '../pages/produtos/produtos';
 import { ProdutoPage } from '../pages/produto/produto';
@@ -20,6 +21,6 @@ import { ProdutoPage } from '../pages/produto/produto';
     ProdutosPage,
     ProdutoPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, BarcodeScanner]
 })
 export class AppModule {}
